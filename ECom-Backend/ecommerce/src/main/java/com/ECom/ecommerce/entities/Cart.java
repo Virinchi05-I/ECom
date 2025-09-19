@@ -14,7 +14,8 @@ import lombok.Setter;
 public class Cart {
     
     @Id
-    private Long cartId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String cartId;
     
     @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_id", nullable = false)

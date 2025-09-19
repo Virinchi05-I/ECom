@@ -10,12 +10,16 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import java.util.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import jakarta.annotation.Generated;
 
 
 
@@ -28,10 +32,11 @@ import java.time.LocalDateTime;
 public class User {
 
     @Id
-    private Long userId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String id;
 
     @Column(name = "user_name")
-    private String userName;
+    private String name;
 
     @Column(nullable = false, unique = true)
     @Email(message = "Invalid email address")
@@ -75,4 +80,33 @@ public class User {
     private boolean isActive(){
         return this.active;
     }
+
+    public Role getRole(){
+        return role;
+    }
+
+    public void setRole(Role role){
+        this.role = role;
+    }
+
+    public String getEmail(){
+        return email;
+    }
+
+    public void setEmail(String email){
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+    return phoneNumber;
+}
+
+    public void setPhoneNumber(String phoneNumber) {
+    if (phoneNumber != null && phoneNumber.matches("\\d{10}")) {
+        this.phoneNumber = phoneNumber;
+    } else {
+        throw new IllegalArgumentException("Phone number must be 10 digits");
+    }
+}
+
 }

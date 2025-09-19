@@ -22,7 +22,8 @@ import lombok.Setter;
 public class Order {
     
     @Id
-    private Long orderId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

@@ -15,8 +15,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CartItem {
     
-    @Id 
-    private Long cartItemId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String cartItemId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id", nullable = false)

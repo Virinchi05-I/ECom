@@ -15,7 +15,8 @@ import java.util.*;
 public class ItemType {
     
     @Id
-    private Long itemTypeId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String itemTypeId;
 
     @Column(length = 100, nullable = false)
     private String itemTypeName;

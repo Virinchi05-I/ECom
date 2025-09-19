@@ -19,7 +19,8 @@ import lombok.Setter;
 public class Review {
 
     @Id
-    private Long reviewId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String reviewId;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

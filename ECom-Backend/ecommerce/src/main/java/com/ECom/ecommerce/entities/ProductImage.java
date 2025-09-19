@@ -14,7 +14,8 @@ import lombok.Setter;
 public class ProductImage {
     
     @Id
-    private Long productImageId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String productImageId;
 
     @Column(length = 1000, nullable = false)
     private String ImageURL;

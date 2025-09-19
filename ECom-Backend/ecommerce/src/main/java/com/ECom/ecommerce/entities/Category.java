@@ -15,10 +15,11 @@ import java.util.*;
 public class Category {
     
     @Id
-    private Long categoryId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String id;
 
     @Column(length = 100, nullable = false)
-    private String categoryName;
+    private String name;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products = new ArrayList<>();

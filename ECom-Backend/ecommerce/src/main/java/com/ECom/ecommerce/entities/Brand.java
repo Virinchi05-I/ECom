@@ -15,7 +15,8 @@ import java.util.*;
 public class Brand {
     
     @Id
-    private Long brandId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String brandId;
 
     @Column(length = 100, nullable = false)
     private String brandName;

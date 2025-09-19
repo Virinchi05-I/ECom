@@ -16,7 +16,8 @@ import lombok.Setter;
 public class OrderItem {
     
     @Id
-    private Long orderItemId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String orderItemId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)

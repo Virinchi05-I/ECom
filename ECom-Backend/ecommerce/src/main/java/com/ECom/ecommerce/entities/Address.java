@@ -14,7 +14,8 @@ import lombok.Setter;
 public class Address {
     
     @Id
-    private Long addressId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String addressId;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
