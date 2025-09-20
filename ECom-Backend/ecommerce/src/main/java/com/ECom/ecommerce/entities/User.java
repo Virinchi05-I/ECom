@@ -77,6 +77,30 @@ public class User {
 
     // getters and setters
 
+    public String getName(){
+        return name;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
+    }
+
+    public String getPassword(){
+        return password;
+    }
+
+    public void setActive(boolean active){
+        this.active = active;
+    }
+
+    public boolean getActive(){
+        return active;
+    }
+
     private boolean isActive(){
         return this.active;
     }
@@ -98,15 +122,33 @@ public class User {
     }
 
     public String getPhoneNumber() {
-    return phoneNumber;
-}
+        return phoneNumber;
+    }
+
+    
 
     public void setPhoneNumber(String phoneNumber) {
-    if (phoneNumber != null && phoneNumber.matches("\\d{10}")) {
-        this.phoneNumber = phoneNumber;
-    } else {
-        throw new IllegalArgumentException("Phone number must be 10 digits");
+        if (phoneNumber != null && phoneNumber.matches("\\d{10}")) {
+            this.phoneNumber = phoneNumber;
+        } else {
+            throw new IllegalArgumentException("Phone number must be 10 digits");
+        }
     }
-}
+
+    public boolean isEmailVerified() {
+        return emailVerified;
+    }
+
+    public void setEmailVerified(boolean emailVerified) {
+        this.emailVerified = emailVerified;
+    }
+
+    public boolean isPhoneVerified() {
+        return phoneVerified;
+    }
+
+    public void setPhoneVerified(boolean phoneVerified) {
+        this.phoneVerified = phoneVerified;
+    }
 
 }
