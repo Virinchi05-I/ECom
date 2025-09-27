@@ -11,7 +11,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import java.math.BigDecimal;
+import jakarta.persistence.Transient;
+
 
 @Entity
 @Setter
@@ -22,7 +23,7 @@ import java.math.BigDecimal;
 public class ProductVariant {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String variantId;
+    private Long variantId;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
@@ -32,12 +33,9 @@ public class ProductVariant {
     private String size;
     private int stock;
 
+    @Transient
     private boolean isInStock(){
-        if (stock > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return stock > 0;
     }
 }
 
