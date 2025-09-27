@@ -5,12 +5,16 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.ECom.ecommerce.entities.Address;
 import com.ECom.ecommerce.entities.Order;
+import com.ECom.ecommerce.entities.OrderStatus;
 import com.ECom.ecommerce.entities.User;
 
-public interface OrderRepo extends JpaRepository<Order, String> {
+
+@Repository
+public interface OrderRepo extends JpaRepository<Order, Long> {
     
     // --------------- customer ---------------- //
 
@@ -37,6 +41,10 @@ public interface OrderRepo extends JpaRepository<Order, String> {
     List<Order> findByDeliveryAddressAndOrderStatus(Address address, String orderStatus);
 
     List<Order> findByDeliveryDateAndDeliveryAddress(LocalDateTime date, Address address);
+
+    List<Order> findByOrderstatus(OrderStatus status);
+
+    List<Order> findByUserIdAndOrderstatus(Long userId, OrderStatus status);
     
     
 }

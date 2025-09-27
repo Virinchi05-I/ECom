@@ -3,15 +3,19 @@ package com.ECom.ecommerce.repositories;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.ECom.ecommerce.entities.Address;
 import com.ECom.ecommerce.entities.User;
 
-public interface AddressRepo extends JpaRepository<Address, String> {
+@Repository
+public interface AddressRepo extends JpaRepository<Address, Long> {
 
     List<Address> findByUser(User user);
 
     void deleteByUser(User user);
+
+    // ------------- ADMIN ------------- \\
 
     List<Address> findByStreet(String street);
 
@@ -21,11 +25,7 @@ public interface AddressRepo extends JpaRepository<Address, String> {
     
     List<Address> findByCountry(String country);
 
-    List<Address> findByUserAndCity(User user, String city);
+    List<Address> findByPincode(String pincode);
 
-    List<Address> findByUserAndState(User user, String state);
-    
-    List<Address> findByUserAndCountry(User user, String country);
-    
-    List<Address> findByUserAndStreet(User user, String street);
+    public List<Address> findByUserId(Long userId);
 }

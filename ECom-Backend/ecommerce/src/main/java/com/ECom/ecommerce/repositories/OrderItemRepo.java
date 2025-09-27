@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.ECom.ecommerce.entities.Order;
 import com.ECom.ecommerce.entities.OrderItem;
 import com.ECom.ecommerce.entities.Product;
 
-public interface OrderItemRepo extends JpaRepository<OrderItem, String> {
+@Repository
+public interface OrderItemRepo extends JpaRepository<OrderItem, Long> {
 
     List<OrderItem> findByOrder(Order order); 
 
