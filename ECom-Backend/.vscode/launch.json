@@ -1,0 +1,17 @@
+{
+    "configurations": [
+
+        {
+            "name":"ECom Backend",
+            "type":"java",
+            "request":"launch",
+            "mainClass":"com.ecom.EcomBackendApplication",
+            "cwd": "${workspaceFolder}",
+            "projectName": "ECom-Backend",
+            "envFile": "${workspaceFolder}/.env",
+            "env": {
+
+            }
+        }
+    ]
+}
