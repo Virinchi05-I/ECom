@@ -15,7 +15,7 @@ public class ProductImage {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String productImageId;
+    private Long productImageId;
 
     @Column(length = 1000, nullable = false)
     private String ImageURL;
