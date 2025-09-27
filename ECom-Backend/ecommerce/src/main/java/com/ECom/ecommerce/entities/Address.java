@@ -15,7 +15,7 @@ public class Address {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String addressId;
+    private Long id;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -38,4 +38,8 @@ public class Address {
 
     @Enumerated(EnumType.STRING)
     private AddressType addressType = AddressType.HOME;
+
+    public Address getAddressId() {
+        return this;
+    }
 }

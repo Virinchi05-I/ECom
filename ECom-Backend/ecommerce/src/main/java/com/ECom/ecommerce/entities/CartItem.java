@@ -17,7 +17,7 @@ public class CartItem {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String cartItemId;
+    private Long cartItemId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id", nullable = false)
@@ -30,18 +30,21 @@ public class CartItem {
     @Column(nullable = false)
     private int quantity;
 
-    private String productName(){
+    public String getProductName() {
         return product.getName();
     }
 
-    private BigDecimal getProductPrice(){
+
+    public BigDecimal getProductPrice(){
         return product.getPrice();
     }
 
-    private BigDecimal getTotalPrice(){
-        BigDecimal productPrice = getProductPrice();
-        return productPrice.multiply(BigDecimal.valueOf(quantity));
+    @Transient
+    public BigDecimal getTotalPrice() {
+        return product.getPrice().multiply(BigDecimal.valueOf(quantity));
     }
+
+    
     
 
 }

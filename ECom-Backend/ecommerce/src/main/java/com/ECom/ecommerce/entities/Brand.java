@@ -16,7 +16,7 @@ public class Brand {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String brandId;
+    private Long brandId;
 
     @Column(length = 100, nullable = false)
     private String brandName;
@@ -24,7 +24,18 @@ public class Brand {
     @Column(length = 1000, nullable = false)
     private String brandDescription;
 
+    @Column(length = 1000, nullable = false)
+    private String logoUrl;
+
     @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products = new ArrayList<>();
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
 
 }

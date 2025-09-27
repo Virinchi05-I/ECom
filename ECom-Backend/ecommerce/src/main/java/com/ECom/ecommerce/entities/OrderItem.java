@@ -17,7 +17,7 @@ public class OrderItem {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String orderItemId;
+    private Long orderItemId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
@@ -30,17 +30,11 @@ public class OrderItem {
     @Column(nullable = false)
     private int quantity;
 
-    private String productName(){
-        return product.getName();
-    }
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal price;
 
-    private BigDecimal getProductPrice(){
-        return product.getPrice();
-    }
-
-    private BigDecimal getTotalPrice(){
-        BigDecimal productPrice = getProductPrice();
-        return productPrice.multiply(BigDecimal.valueOf(quantity));
+    public BigDecimal getTotalPrice() {
+        return product.getPrice().multiply(BigDecimal.valueOf(quantity));
     }
     
 }

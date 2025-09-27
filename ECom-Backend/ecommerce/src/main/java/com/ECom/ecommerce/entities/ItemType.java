@@ -16,11 +16,20 @@ public class ItemType {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String itemTypeId;
+    private Long itemTypeId;
 
     @Column(length = 100, nullable = false)
     private String itemTypeName;
 
+    private boolean active = true;
+
     @OneToMany(mappedBy = "itemType", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Product> products = new ArrayList<>();
+    private List<Category> categories = new ArrayList<>();
+
+    @OneToMany(mappedBy = "itemType", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Brand> brands = new ArrayList<>();
+
+    @OneToMany(mappedBy = "itemType", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Brand> products = new ArrayList<>();
+
 }

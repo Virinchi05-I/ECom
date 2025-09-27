@@ -19,7 +19,7 @@ public class Product {
     
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String productId;
+    private Long productId;
 
     @Column(length = 100, nullable = false)
     private String name;
@@ -50,7 +50,7 @@ public class Product {
     
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> cartItems = new ArrayList<>();
-    
+     
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>();
     
@@ -59,5 +59,25 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductVariant> productVariant = new ArrayList<>();
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public ItemType getItemType() {
+        return itemType;
+    }
+    
+    public void setProductVariant(List<ProductVariant> productVariant) {
+        this.productVariant = productVariant;
+    }
+
+    public List<ProductVariant> getProductVariant() {
+        return productVariant;
+    }
 
 }

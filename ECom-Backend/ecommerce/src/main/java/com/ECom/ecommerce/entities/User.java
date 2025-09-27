@@ -33,7 +33,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
 
     @Column(name = "user_name")
     private String name;
@@ -58,6 +58,8 @@ public class User {
     private Role role = Role.ROLE_GUEST;
 
     private boolean emailVerified = false;
+    private String emailVerificationToken;
+
     private boolean phoneVerified = false;
 
     private LocalDate dateOfBirth;
@@ -71,6 +73,18 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> cartItems = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RefreshToken> refreshTokens = new ArrayList<>();
+
     @JsonIgnore
     @OneToOne
     private Cart cart;
@@ -83,7 +97,7 @@ public class User {
 
     public void setName(String name){
         this.name = name;
-    }
+    } 
 
     public void setPassword(String password){
         this.password = password;
@@ -97,11 +111,7 @@ public class User {
         this.active = active;
     }
 
-    public boolean getActive(){
-        return active;
-    }
-
-    private boolean isActive(){
+    public boolean isActive(){
         return this.active;
     }
 
@@ -140,6 +150,7 @@ public class User {
     }
 
     public void setEmailVerified(boolean emailVerified) {
+
         this.emailVerified = emailVerified;
     }
 
@@ -150,5 +161,14 @@ public class User {
     public void setPhoneVerified(boolean phoneVerified) {
         this.phoneVerified = phoneVerified;
     }
+
+    public void verifyEmailToken(String token){
+        if(this.emailVerificationToken.equals(token)){
+            this.emailVerified = true;
+        }else{
+            this.phoneVerified = true;
+        }
+    }
+
 
 }
