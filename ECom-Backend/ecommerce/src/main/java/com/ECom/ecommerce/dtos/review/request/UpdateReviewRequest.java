@@ -1,25 +1,18 @@
-package com.ECom.ecommerce.dtos.review.response;
+package com.ECom.ecommerce.dtos.review.request;
 
 import java.time.LocalDateTime;
-
-
-import com.ECom.ecommerce.entities.Product;
-import com.ECom.ecommerce.entities.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReviewResponse {
+public class UpdateReviewRequest {
 
-    
     private Long reviewId;
     private Long userId;
     private Long productId;

@@ -1,4 +1,5 @@
-package com.ECom.ecommerce.dtos.brand.response;
+package com.ECom.ecommerce.dtos.item_type.request;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,10 +10,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BrandResponse{ 
+public class ItemTypeRequest {
     
-    private Long brandId;
-    private String name;
-    private String logoUrl;
-} 
- 
+    private String itemTypeName;
+    private boolean active;
+}

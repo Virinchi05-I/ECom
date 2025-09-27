@@ -1,15 +1,9 @@
 package com.ECom.ecommerce.dtos.auth.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.NotBlank;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-public class LogoutRequest {
+public record LogoutRequest(
 
-    private String refreshToken;
-}
+    @NotBlank(message = "Refresh token is required")
+    String refreshToken
+) {}
