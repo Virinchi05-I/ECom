@@ -1,38 +1,32 @@
 package com.ECom.ecommerce.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import lombok.AccessLevel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import java.util.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.*;
 
-import jakarta.annotation.Generated;
-
-
-
-@Entity 
+@Entity
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class User {
+@Builder
+public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "user_name")
@@ -43,23 +37,27 @@ public class User {
     private String email;
 
     @Column(nullable = false, unique = true, length = 10)
+    @Pattern(regexp = "\\d{10}", message = "Phone number must be 10 digits")
     private String phoneNumber;
-    
+
     @JsonIgnore
     @Column(nullable = false)
-    @Size(min = 8, max = 16)
     private String password;
 
-    @Getter(AccessLevel.NONE)
-    @JsonIgnore
+    @Column(nullable = false)
     private boolean active = false;
 
     @Enumerated(EnumType.STRING)
-    private Role role = Role.ROLE_GUEST;
+    @Column(nullable = false)
+    private Role role;
 
+    @Column(nullable = false)
     private boolean emailVerified = false;
+
+    @JsonIgnore
     private String emailVerificationToken;
 
+    @Column(nullable = false)
     private boolean phoneVerified = false;
 
     private LocalDate dateOfBirth;
@@ -70,105 +68,65 @@ public class User {
     @UpdateTimestamp
     private LocalDateTime updatedDate;
 
+    // Relationships
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<Address> addresses = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<Order> orders = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<Review> reviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<CartItem> cartItems = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<RefreshToken> refreshTokens = new ArrayList<>();
 
     @JsonIgnore
     @OneToOne
     private Cart cart;
 
-    // getters and setters
+    // ----- Custom Methods -----
 
-    public String getName(){
-        return name;
-    }
-
-    public void setName(String name){
-        this.name = name;
-    } 
-
-    public void setPassword(String password){
-        this.password = password;
-    }
-
-    public String getPassword(){
-        return password;
-    }
-
-    public void setActive(boolean active){
-        this.active = active;
-    }
-
-    public boolean isActive(){
-        return this.active;
-    }
-
-    public Role getRole(){
-        return role;
-    }
-
-    public void setRole(Role role){
-        this.role = role;
-    }
-
-    public String getEmail(){
-        return email;
-    }
-
-    public void setEmail(String email){
-        this.email = email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    
-
-    public void setPhoneNumber(String phoneNumber) {
-        if (phoneNumber != null && phoneNumber.matches("\\d{10}")) {
-            this.phoneNumber = phoneNumber;
-        } else {
-            throw new IllegalArgumentException("Phone number must be 10 digits");
-        }
-    }
-
-    public boolean isEmailVerified() {
-        return emailVerified;
-    }
-
-    public void setEmailVerified(boolean emailVerified) {
-
-        this.emailVerified = emailVerified;
-    }
-
-    public boolean isPhoneVerified() {
-        return phoneVerified;
-    }
-
-    public void setPhoneVerified(boolean phoneVerified) {
-        this.phoneVerified = phoneVerified;
-    }
-
-    public void verifyEmailToken(String token){
-        if(this.emailVerificationToken.equals(token)){
+    /**
+     * Verify email token.
+     * Returns true if token matches and email is verified, false otherwise.
+     */
+    public boolean verifyEmailToken(String token) {
+        if (emailVerificationToken != null && emailVerificationToken.equals(token)) {
             this.emailVerified = true;
-        }else{
-            this.phoneVerified = true;
+            return true;
         }
+        return false;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() { return true; }
+
+    @Override
+    public boolean isAccountNonLocked() { return true; }
+
+    @Override
+    public boolean isCredentialsNonExpired() { return true; }
+
+    @Override
+    public boolean isEnabled() { return this.active; }
 
 }

@@ -22,7 +22,7 @@ public class CreateOrderRequest {
     private User user;
     private Address address;
     private BigDecimal totalAmount;
-    private OrderStatus orderstatus;
+    private OrderStatus orderStatus;
     private LocalDateTime orderDate;
     private LocalDateTime deliveryDate;
 

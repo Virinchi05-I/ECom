@@ -20,7 +20,7 @@ import com.ECom.ecommerce.services.productvariant.ProductVariantService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/productVariant")
 @CrossOrigin
 @RequiredArgsConstructor
 public class ProductVariantController {
@@ -43,8 +43,8 @@ public class ProductVariantController {
     }
 
     @GetMapping("/searchVariants")
-    public List<ProductVariantResponse> searchVariants(Long productId, String color, String size, Boolean inStock) {
-        return productVariantService.searchVariants(productId, color, size, inStock);
+    public List<ProductVariantResponse> searchVariants(Long productId, String color, String size, int stock) {
+        return productVariantService.searchVariants(productId, color, size, stock);
     }
 
     @GetMapping("/findAll")

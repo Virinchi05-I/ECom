@@ -19,6 +19,7 @@ public class AuthResponse {
     private String name;
     private String email;
     private String phoneNumber;
+    private String password;
     private Role role;
     private LocalDate dateOfBirth;
     private boolean active;

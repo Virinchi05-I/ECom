@@ -60,7 +60,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryResponse> findByName(String name) {
-        List<Category> categories = categoryRepo.findByName(name);
+        List<Category> categories = categoryRepo.findByCategoryName(name);
         return categories.stream().map(this::mapToCategoryResponse).toList();
     }
     

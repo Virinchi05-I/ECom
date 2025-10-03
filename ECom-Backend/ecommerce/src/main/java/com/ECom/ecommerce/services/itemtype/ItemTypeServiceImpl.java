@@ -22,7 +22,7 @@ public class ItemTypeServiceImpl implements ItemTypeService {
     @Override
     public List<ItemTypeResponse> findByName(String name) {
         
-        List<ItemType> itemTypes = itemTypeRepo.findByName(name);
+        List<ItemType> itemTypes = itemTypeRepo.findByItemTypeName(name);
         
         
         return itemTypes.stream().map(this::mapItemTypeToRespone).toList();
@@ -67,7 +67,7 @@ public class ItemTypeServiceImpl implements ItemTypeService {
     @Override
     public boolean existsByName(String name) {
         
-        List<ItemType> itemType = itemTypeRepo.findByName(name);
+        List<ItemType> itemType = itemTypeRepo.findByItemTypeName(name);
         
         return !itemType.isEmpty();
     }
@@ -105,21 +105,21 @@ public class ItemTypeServiceImpl implements ItemTypeService {
     @Override
     public ItemTypeResponse findByProduct(Product product) {
         
-        Optional<ItemType> itemType = itemTypeRepo.findByProduct(product);
+        Optional<ItemType> itemType = itemTypeRepo.findByProducts(product);
 
         return mapItemTypeToRespone(itemType.get());
     }
 
     @Override
     public List<ItemTypeResponse> findByCategoryId(Category category) {
-        List<ItemType> itemTypes = itemTypeRepo.findByCategory(category);
+        List<ItemType> itemTypes = itemTypeRepo.findByCategories(category);
 
         return itemTypes.stream().map(this::mapItemTypeToRespone).toList();
     }
 
     @Override
     public List<ItemTypeResponse> findByBrandId(Brand brand) {
-        List<ItemType> itemTypes = itemTypeRepo.findByBrand(brand);
+        List<ItemType> itemTypes = itemTypeRepo.findByBrands(brand);
 
         return itemTypes.stream().map(this::mapItemTypeToRespone).toList();
     }

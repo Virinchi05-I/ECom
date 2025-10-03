@@ -20,7 +20,7 @@ public interface OrderRepo extends JpaRepository<Order, Long> {
 
     List<Order> findByUser(User user);
 
-    List<Order> findByUserAndOrderstatus(User user, String status);
+    List<Order> findByUserAndOrderStatus(User user, String status);
 
 
     // -------- Admin / Reporting -------- //
@@ -36,15 +36,15 @@ public interface OrderRepo extends JpaRepository<Order, Long> {
 
     // --------------- Seller ---------------- //
 
-    List<Order> findByDeliveryAddress(Address address);
+    List<Order> findByAddress(Address address);
 
-    List<Order> findByDeliveryAddressAndOrderStatus(Address address, String orderStatus);
+    List<Order> findByAddressAndOrderStatus(Address address, String orderStatus);
 
-    List<Order> findByDeliveryDateAndDeliveryAddress(LocalDateTime date, Address address);
+    List<Order> findByDeliveryDateAndAddress(LocalDateTime date, Address address);
 
-    List<Order> findByOrderstatus(OrderStatus status);
+    List<Order> findByOrderStatus(OrderStatus status);
 
-    List<Order> findByUserIdAndOrderstatus(Long userId, OrderStatus status);
+    List<Order> findByUserIdAndOrderStatus(Long userId, OrderStatus status);
     
     
 }

@@ -15,7 +15,7 @@ public interface OrderService {
     // Order management
     OrderResponse createOrder(CreateOrderRequest createOrderRequest);
     Optional<OrderResponse> findOrderById(Long orderId);
-    void updateOrderStatus(Long orderId, String status, String ROLE);
+    void updateOrderStatus(Long orderId, String status, String orderStatus);
     boolean deleteOrder(Long orderId);
 
     // Query orders

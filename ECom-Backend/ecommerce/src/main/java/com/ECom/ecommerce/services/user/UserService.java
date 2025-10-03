@@ -7,7 +7,7 @@ import com.ECom.ecommerce.dtos.user.request.UserRequest;
 import com.ECom.ecommerce.dtos.user.response.UserResponse;
 import com.ECom.ecommerce.entities.Role;
 
-public interface UserService {
+public interface    UserService {
 
     UserResponse createUser(UserRequest userRequest, String role);
 

@@ -26,7 +26,7 @@ import com.ECom.ecommerce.services.product.ProductService;
 import lombok.RequiredArgsConstructor;
 
 @RestController 
-@RequestMapping("/ECom/User/products")
+@RequestMapping("/ECom/user/products")
 @CrossOrigin
 @RequiredArgsConstructor
 public class ProductController {
@@ -38,20 +38,20 @@ public class ProductController {
         return ResponseEntity.ok(productService.createProduct(createProductRequest));
     }
     
-    @PatchMapping("/{id}")
+    @PatchMapping("/update/{id}")
     public ResponseEntity<ProductResponse> update(
             @PathVariable("id") Long productId, 
             @RequestBody UpdateProductRequest updateProductRequest){
         return ResponseEntity.ok(productService.updateProduct(productId, updateProductRequest));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long productId){
         productService.deleteProduct(productId);
         return ResponseEntity.noContent().build();
     }
     
-    @GetMapping("/{id}")
+    @GetMapping("/filterById/{id}")
     public ResponseEntity<ProductResponse> getById(@PathVariable("id") Long productId){
         
         Optional<ProductResponse> productOpt = productService.findProductById(productId);
@@ -61,27 +61,27 @@ public class ProductController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
     
-    @GetMapping("/products")
+    @GetMapping("/filterAll")
     public ResponseEntity<List<ProductResponse>> getAllProduct(){
         return ResponseEntity.ok(productService.findAll());     
     }
 
-    @GetMapping("/category")
+    @GetMapping("/FilterByCategory")
     public ResponseEntity<List<ProductListResponse>> getByCategory(@RequestParam Long categoryId) {
         return ResponseEntity.ok(productService.findByCategory(categoryId));
     }
 
-    @GetMapping("/brand")
+    @GetMapping("/filterByBrand")
     public ResponseEntity<List<ProductListResponse>> getByBrand(@RequestParam Long brandId) {
         return ResponseEntity.ok(productService.findByBrand(brandId));
     }
 
-    @GetMapping("/itemType")
+    @GetMapping("/filterByItemType")
     public ResponseEntity<List<ProductListResponse>> getByItemType(@RequestParam Long itemTypeId) {
         return ResponseEntity.ok(productService.findByItemType(itemTypeId));
     }
 
-    @GetMapping("/name")
+    @GetMapping("/filterByName")
     public ResponseEntity<List<ProductListResponse>> getByName(@RequestParam String name) {
         return ResponseEntity.ok(productService.findByName(name));
     }

@@ -13,7 +13,7 @@ import com.ECom.ecommerce.entities.User;
 public interface CartRepo extends JpaRepository<Cart, Long> {
 
     Optional<Cart> findByUser(User user);
-    Optional<Cart> findByUserId(String userId);
+    Optional<Cart> findByUserId(Long userId);
 
     void deleteByUser(User user);
 

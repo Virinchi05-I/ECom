@@ -21,7 +21,7 @@ import com.ECom.ecommerce.services.address.AddressService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/address")
 @CrossOrigin
 @RequiredArgsConstructor
 public class AddressController {

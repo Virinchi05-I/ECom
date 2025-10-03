@@ -18,5 +18,5 @@ public interface ProductVariantService {
 
     Optional<ProductVariantResponse> findById(Long variantId);
 
-    List<ProductVariantResponse> searchVariants(Long productId, String color, String size, Boolean inStock);
+    List<ProductVariantResponse> searchVariants(Long productId, String color, String size, int stock);
 }

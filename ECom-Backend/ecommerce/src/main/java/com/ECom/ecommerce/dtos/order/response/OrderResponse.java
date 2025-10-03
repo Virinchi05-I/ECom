@@ -23,7 +23,7 @@ public class OrderResponse {
     private Long userId;
     private Long addressId;
     private BigDecimal totalAmount;
-    private OrderStatus orderstatus;
+    private OrderStatus orderStatus;
     private LocalDateTime orderDate;
     private LocalDateTime deliveryDate;
 

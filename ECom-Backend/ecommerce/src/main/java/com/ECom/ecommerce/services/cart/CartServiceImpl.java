@@ -26,7 +26,7 @@ public class CartServiceImpl implements CartService {
     private ProductRepo productRepo;
     
     @Override
-    public CartResponse getCartByUserId(String userId) {
+    public CartResponse getCartByUserId(Long userId) {
         
          Cart cart = cartRepo.findByUserId(userId)
             .orElseThrow(() -> new RuntimeException("Cart not found for user"));
@@ -35,7 +35,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartResponse addCartItem(String userId, AddCartItemRequest addCartItemRequest) { 
+    public CartResponse addCartItem(Long userId, AddCartItemRequest addCartItemRequest) {
         
         Cart cart = cartRepo.findByUserId(userId)
             .orElseThrow(() -> new RuntimeException("Cart not found for user"));
@@ -56,7 +56,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartResponse updateCartItem(String userId, UpdateCartItemRequest updateCartItemRequest) {
+    public CartResponse updateCartItem(Long userId, UpdateCartItemRequest updateCartItemRequest) {
         
         Cart cart = cartRepo.findByUserId(userId)
             .orElseThrow(() -> new RuntimeException("Cart not found for user"));
@@ -83,7 +83,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartResponse removeCartItem(String userId, String productId) {
+    public CartResponse removeCartItem(Long userId, Long productId) {
         
          Cart cart = cartRepo.findByUserId(userId)
             .orElseThrow(() -> new RuntimeException("Cart not found for user"));
@@ -95,7 +95,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartResponse clearCart(String userId) {
+    public CartResponse clearCart(Long userId) {
        
          Cart cart = cartRepo.findByUserId(userId)
             .orElseThrow(() -> new RuntimeException("Cart not found for user"));

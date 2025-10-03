@@ -5,6 +5,7 @@ import com.ECom.ecommerce.repositories.UserRepo;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +27,9 @@ public class EmailServiceImpl implements EmailService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Value("${spring.mail.properties.domain_name}")
+    private String domainName;
+
     // Temporary OTP/token store (use Redis/DB in production)
     private final Map<String, String> tokenStore = new HashMap<>();
 
@@ -36,6 +40,7 @@ public class EmailServiceImpl implements EmailService {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
+            helper.setFrom(domainName);
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(body, true); // true = enable HTML
@@ -87,7 +92,7 @@ public class EmailServiceImpl implements EmailService {
     public void sendEmailVerification(String to, String token) {
         tokenStore.put(to, token);
         String body = "<h3>Email Verification</h3>" +
-                "<p>Click <a href='http://localhost:8080/api/auth/verify-email?token=" + token +
+                "<p>Click <a href='http://localhost:8081/auth/verify-email?token=" + token +
                 "'>here</a> to verify your account.</p>";
         sendEmail(to, "Verify Your Email", body);
     }

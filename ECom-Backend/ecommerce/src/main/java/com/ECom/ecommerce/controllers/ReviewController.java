@@ -21,7 +21,7 @@ import com.ECom.ecommerce.services.review.ReviewService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/reviews")
 @CrossOrigin
 @RequiredArgsConstructor
 public class ReviewController {
@@ -57,7 +57,7 @@ public class ReviewController {
         return ResponseEntity.ok(reviewService.getReviewsByUserId(userId));
     }
 
-    @GetMapping("/all")
+    @GetMapping("/filterAll")
     public ResponseEntity<List<ReviewResponse>> getAll() {
         return ResponseEntity.ok(reviewService.findAll());
     }

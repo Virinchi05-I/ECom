@@ -137,7 +137,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderListResponse> findByStatus(String status) {
-        List<Order> orders = orderRepo.findByOrderstatus(OrderStatus.valueOf(status.toUpperCase())); 
+        List<Order> orders = orderRepo.findByOrderStatus(OrderStatus.valueOf(status.toUpperCase()));
         return orders.stream()
                 .map(this::mapOrderListToResponseList)
                 .toList();
@@ -145,7 +145,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderListResponse> findByUserAndStatus(Long userId, String status) {
-        List<Order> orders = orderRepo.findByUserIdAndOrderstatus(userId, OrderStatus.valueOf(status.toUpperCase()));
+        List<Order> orders = orderRepo.findByUserIdAndOrderStatus(userId, OrderStatus.valueOf(status.toUpperCase()));
         return orders.stream()
                 .map(this::mapOrderListToResponseList)
                 .toList();
@@ -268,7 +268,7 @@ public class OrderServiceImpl implements OrderService {
         response.setUserId(order.getUser().getId());
         response.setAddressId(order.getAddress().getId());
         response.setTotalAmount(order.getTotalAmount());
-        response.setOrderstatus(order.getOrderstatus());
+        response.setOrderStatus(order.getOrderStatus());
         response.setOrderDate(order.getOrderDate());
         response.setDeliveryDate(order.getDeliveryDate());
 
@@ -342,7 +342,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     // Check current status (e.g., cannot cancel shipped/delivered orders)
-    if (order.getOrderstatus() == OrderStatus.SHIPPED || order.getOrderstatus() == OrderStatus.DELIVERED) {
+    if (order.getOrderStatus() == OrderStatus.SHIPPED || order.getOrderStatus() == OrderStatus.DELIVERED) {
         throw new IllegalStateException("Order cannot be canceled at this stage");
     }
 

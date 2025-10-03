@@ -92,21 +92,21 @@ public class ProductVariantServiceimpl implements ProductVariantService {
     }
 
     @Override
-    public List<ProductVariantResponse> searchVariants(Long productId, String color, String size, Boolean inStock) {
+    public List<ProductVariantResponse> searchVariants(Long productId, String color, String size, int stock) {
       Product product = productRepo.findById(productId)
             .orElseThrow(() -> new RuntimeException("Product not found"));
 
     List<ProductVariant> productVariants;
 
-    if (color != null && size != null && inStock != null) {
-        productVariants = productVariantRepo.findByProductAndColorAndSizeAndStock(product, color, size, inStock);
+    if (color != null && size != null && stock != 0) {
+        productVariants = productVariantRepo.findByProductAndColorAndSizeAndStock(product, color, size, stock);
     } else if (color != null && size != null) {
         productVariants = productVariantRepo.findByProductAndColorAndSize(product, color, size);
     } else if (color != null) {
         productVariants = productVariantRepo.findByProductAndColor(product, color);
     } else if (size != null) {
         productVariants = productVariantRepo.findByProductAndSize(product, size);
-    } else if (inStock != null && inStock) {
+    } else if (stock != 0) {
         productVariants = productVariantRepo.findByProductAndStockGreaterThan(product, 0);
     } else {
         productVariants = productVariantRepo.findByProduct(product);

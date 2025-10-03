@@ -14,5 +14,5 @@ import lombok.Setter;
 public class UpdateOrderStatusRequest {
 
     private Long orderId;     
-    private String status; 
+    private String orderStatus;
 }

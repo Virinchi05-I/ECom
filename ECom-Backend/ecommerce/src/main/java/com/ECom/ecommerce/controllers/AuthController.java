@@ -1,17 +1,9 @@
 package com.ECom.ecommerce.controllers;
 
+import com.ECom.ecommerce.dtos.auth.request.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.ECom.ecommerce.dtos.auth.request.LoginRequest;
-import com.ECom.ecommerce.dtos.auth.request.LogoutRequest;
-import com.ECom.ecommerce.dtos.auth.request.RefreshTokenRequest;
-import com.ECom.ecommerce.dtos.auth.request.RegisterRequest;
 import com.ECom.ecommerce.dtos.auth.response.AuthResponse;
 import com.ECom.ecommerce.services.auth.AuthService;
 import com.ECom.ecommerce.services.email.EmailService;
@@ -21,8 +13,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/ECom/auth")
-@CrossOrigin()
+@RequestMapping("/auth")
+@CrossOrigin(origins = "http://localhost:5173")
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -38,23 +30,30 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest){
-        return ResponseEntity.ok(authService.login(loginRequest));
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
+        try {
+            AuthResponse response = authService.login(loginRequest);
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(401).body(
+                    new AuthResponse(null, null, e.getMessage())
+            );
+        }
     }
     
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@Valid @RequestBody LogoutRequest logoutRequest){
+    public ResponseEntity<AuthResponse> logout(@Valid @RequestBody LogoutRequest logoutRequest){
         return ResponseEntity.ok(authService.logout(logoutRequest));
     }
 
      @PostMapping("/refresh")
     public ResponseEntity<AuthResponse> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest){
         return ResponseEntity.ok(authService.refreshToken(refreshTokenRequest.refreshToken()));
-    } 
+    }
 
-    @PostMapping("/verify-email")
-    public ResponseEntity<String> verifyEmailOtp(@RequestParam String email, @RequestParam String token) {
-        boolean verified = emailService.verifyOtp(email, token);
+    @GetMapping("/verify-email")
+    public ResponseEntity<String> verifyEmailOtp(@RequestBody VerifyRequest request) {
+        boolean verified = emailService.verifyOtp(request.getEmail(), request.getToken());
         return ResponseEntity.ok(verified ? "Email verified successfully" : "Invalid or expired OTP");
     }
 

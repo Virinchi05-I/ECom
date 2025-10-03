@@ -16,7 +16,7 @@ import com.ECom.ecommerce.services.cart.CartService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/carts")
 @CrossOrigin
 @RequiredArgsConstructor
 public class CartController {
@@ -25,34 +25,34 @@ public class CartController {
 
     @RequestMapping("/{UserId}/{CartId}")
     public ResponseEntity<CartResponse> filterByUserId(
-        @RequestParam("userId") String userId) {
+        @RequestParam("userId") Long userId) {
         return ResponseEntity.ok(cartService.getCartByUserId(userId));
     }
 
     @PostMapping("/add/{userId}")
     public ResponseEntity<CartResponse> add(
-        @RequestParam("userId") String userId,
+        @RequestParam("userId") Long userId,
         @RequestBody AddCartItemRequest addCartItemRequest) {
         return ResponseEntity.ok(cartService.addCartItem(userId, addCartItemRequest));
     }
 
     @PostMapping("/update/{userId}")
     public ResponseEntity<CartResponse> update(
-        @RequestParam("userId") String userId,
+        @RequestParam("userId") Long userId,
         @RequestBody UpdateCartItemRequest updateCartItemRequest) {
         return ResponseEntity.ok(cartService.updateCartItem(userId, updateCartItemRequest));
     }   
 
     @PostMapping("/remove/{userId}")
     public ResponseEntity<CartResponse> remove(
-        @RequestParam("userId") String userId,
-        @RequestParam("productId") String productId) {
+        @RequestParam("userId") Long userId,
+        @RequestParam("productId") Long productId) {
         return ResponseEntity.ok(cartService.removeCartItem(userId, productId));
     }
 
     @PostMapping("/clear/{userId}")
     public ResponseEntity<CartResponse> clear(
-        @RequestParam("userId") String userId) {
+        @RequestParam("userId") Long userId) {
         return ResponseEntity.ok(cartService.clearCart(userId));
     }
 } 

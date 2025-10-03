@@ -24,19 +24,19 @@ import com.ECom.ecommerce.services.order.OrderService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/orders")
 @CrossOrigin
 @RequiredArgsConstructor
 public class OrderController {
  
     private final OrderService orderService;
     
-    @PostMapping("/orders")
+    @PostMapping("/create")
     public ResponseEntity<OrderResponse> createOrder(@RequestBody CreateOrderRequest createOrderRequest) {
         return ResponseEntity.ok(orderService.createOrder(createOrderRequest));
     }
 
-    @PutMapping("/orders/{orderId}")
+    @PutMapping("/statusUpdate/{orderId}")
     public ResponseEntity<Void> updateStatus(
             @PathVariable Long orderId, 
             @RequestParam String orderStatus,
@@ -46,7 +46,7 @@ public class OrderController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/orders/{orderId}")
+    @DeleteMapping("/delete/{orderId}")
     public ResponseEntity<Boolean> deleteOrder(@PathVariable Long orderId) {
         return ResponseEntity.ok(orderService.deleteOrder(orderId));
     }
@@ -56,19 +56,19 @@ public class OrderController {
         
         return ResponseEntity.ok(orderService.findAll());
     }
-    @GetMapping("/orders/filterByUser")
+    @GetMapping("/filterByUser")
     public ResponseEntity<List<OrderListResponse>> getByUser(
         @RequestParam Long userId
     ) {
         return ResponseEntity.ok(orderService.findByUser(userId));
     }
-    @GetMapping("/orders/filterByStatus")
+    @GetMapping("/filterByStatus")
     public ResponseEntity<List<OrderListResponse>> getByStatus(
         @RequestParam String status
     ) {
         return ResponseEntity.ok(orderService.findByStatus(status));
     }
-    @GetMapping("/orders/filterByUserAndStatus")
+    @GetMapping("/filterByUserAndStatus")
     public ResponseEntity<List<OrderListResponse>> getByUserAndStatus(
         @RequestParam Long userId,
         @RequestParam String status
@@ -76,7 +76,7 @@ public class OrderController {
         return ResponseEntity.ok(orderService.findByUserAndStatus(userId, status));
     }
 
-    @PostMapping("/orders/add/{orderId}")
+    @PostMapping("/add/{orderId}")
     public ResponseEntity<OrderResponse> add(
         @PathVariable Long orderId,
         @RequestBody AddOrderItemRequest addOrderItemRequest
@@ -84,7 +84,7 @@ public class OrderController {
         return ResponseEntity.ok(orderService.addOrderItem(orderId, addOrderItemRequest));
     }
 
-    @PostMapping("/orders/update/{orderId}")
+    @PostMapping("/update/{orderId}")
     public ResponseEntity<OrderResponse> update(
         @PathVariable Long orderId,
         @RequestBody UpdateOrderItemRequest updateOrderItemRequest
@@ -92,7 +92,7 @@ public class OrderController {
         return ResponseEntity.ok(orderService.updateOrderItem(orderId, updateOrderItemRequest));
     }
 
-    @PostMapping("/orders/remove/{orderId}/{orderItemId}")
+    @PostMapping("/remove/{orderId}/{orderItemId}")
     public ResponseEntity<OrderResponse> remove(
         @PathVariable Long orderId,
         @PathVariable Long orderItemId
@@ -100,7 +100,7 @@ public class OrderController {
         return ResponseEntity.ok(orderService.removeOrderItem(orderId, orderItemId));
     }
 
-    @PutMapping("/orders/{orderId}/cancel")
+    @PutMapping("/cancel/{orderId}/cancel")
     public ResponseEntity<OrderResponse> cancel(
         @PathVariable Long orderId,
         @RequestParam Long userId

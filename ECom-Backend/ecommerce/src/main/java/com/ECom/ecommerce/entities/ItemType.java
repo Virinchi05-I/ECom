@@ -15,7 +15,7 @@ import java.util.*;
 public class ItemType {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long itemTypeId;
 
     @Column(length = 100, nullable = false)
@@ -30,6 +30,6 @@ public class ItemType {
     private List<Brand> brands = new ArrayList<>();
 
     @OneToMany(mappedBy = "itemType", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Brand> products = new ArrayList<>();
+    private List<Product> products = new ArrayList<>();
 
 }

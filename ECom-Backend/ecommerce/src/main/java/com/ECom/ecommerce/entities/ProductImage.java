@@ -14,7 +14,7 @@ import lombok.Setter;
 public class ProductImage {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productImageId;
 
     @Column(length = 1000, nullable = false)

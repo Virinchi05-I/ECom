@@ -49,21 +49,21 @@ public class AuthServiceImpl implements AuthService {
         user.setDateOfBirth(registerRequest.getDateOfBirth());
 
         user.setRole(Role.ROLE_CUSTOMER);
-        user.setActive(false);
+        user.setActive(true);
         user.setEmailVerified(false);
         user.setPhoneVerified(false);
 
+        String otp = String.valueOf((int)(Math.random() * 900000) + 100000);
+
+        user.setEmailVerificationToken(otp);
         User savedUser = userRepo.save(user);
 
-         String otp = String.valueOf((int)(Math.random() * 900000) + 100000);
-
-    
         emailService.sendEmailVerification(savedUser.getEmail(), otp);
 
         return mapToResponse(savedUser);
     }
 
-        @Override
+    @Override
     public AuthResponse login(LoginRequest loginRequest) {
         User user = userRepo.findByEmail(loginRequest.email())
                 .orElseThrow(() -> new IllegalArgumentException("This Email is not registered"));
@@ -75,7 +75,7 @@ public class AuthServiceImpl implements AuthService {
 
         AuthResponse response = mapToResponse(user);
 
-        String accessToken = jwtUtil.generateAccessToken(user.getId(), user.getRole().name());
+        String accessToken = jwtUtil.generateAccessToken(user.getId(), user.getEmail(), user.getRole().name());
         String refreshToken = createRefreshToken(user.getId());
 
         // Save refresh token in DB
@@ -115,10 +115,12 @@ public class AuthServiceImpl implements AuthService {
     }
 
     Long userId = Long.parseLong(jwtUtil.getUserIdFromToken(refreshToken));
-    String role = jwtUtil.getRoleFromToken(refreshToken); // will be null if not included in refresh token
+    String role = jwtUtil.getRoleFromToken(refreshToken);
+    String email = jwtUtil.getClaims(refreshToken).getSubject();
 
-    // Generate new tokens
-    String newAccessToken = jwtUtil.generateAccessToken(userId, role);
+
+        // Generate new tokens
+    String newAccessToken = jwtUtil.generateAccessToken(userId, email, role);
     String newRefreshToken = jwtUtil.generateRefreshToken(userId); 
 
     AuthResponse response = new AuthResponse(newAccessToken, newRefreshToken, "Token refreshed successfully");

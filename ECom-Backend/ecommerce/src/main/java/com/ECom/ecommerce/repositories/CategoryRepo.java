@@ -11,6 +11,6 @@ import com.ECom.ecommerce.entities.Category;
 @Repository
 public interface CategoryRepo extends JpaRepository<Category, Long> {
 
-    List<Category> findByName(String name);
+    List<Category> findByCategoryName(String name);
 
 }

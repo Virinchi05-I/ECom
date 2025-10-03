@@ -19,16 +19,19 @@ public class JWTUtil {
     }
 
     // Generate Access Token
-    public String generateAccessToken(Long userId, String role) {
+    // Access Token
+    public String generateAccessToken(Long userId, String email, String role) {
         return Jwts.builder()
-                .setSubject(userId.toString())
+                .setSubject(email)             // <-- email as subject
+                .claim("userId", userId)       // optional
                 .claim("role", role)
-                .claim("type", "access")  // 👈 differentiate
+                .claim("type", "access")
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtAccessExpirationMs))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+
 
     // Generate Refresh Token
     public String generateRefreshToken(Long userId) {
@@ -42,7 +45,7 @@ public class JWTUtil {
     }
 
     // Extract Claims
-    private Claims getClaims(String token) {
+    public Claims getClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
                 .build()

@@ -18,7 +18,7 @@ import com.ECom.ecommerce.services.category.CategoryService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/categories")
 @CrossOrigin
 @RequiredArgsConstructor
 public class CategoryController {

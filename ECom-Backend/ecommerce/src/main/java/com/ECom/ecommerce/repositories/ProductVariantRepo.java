@@ -18,7 +18,7 @@ public interface ProductVariantRepo extends JpaRepository<ProductVariant, Long> 
 
     List<ProductVariant> findByProductAndColorAndSize(Product product, String color, String size);
     
-    List<ProductVariant> findByProductAndColorAndSizeAndStock(Product product, String color, String size, boolean inStock);
+    List<ProductVariant> findByProductAndColorAndSizeAndStock(Product product, String color, String size, int stock);
 
     List<ProductVariant> findByProductAndColor(Product product, String color);
 

@@ -116,7 +116,7 @@ public class ReviewServiceImpl implements ReviewService {
         Product product = productRepo.findById(productId)
                     .orElseThrow( () -> new IllegalArgumentException("Product not found"));
 
-        List<Review> reviews = reviewRepo.findByProductId(product.getProductId());
+        List<Review> reviews = reviewRepo.findByProductProductId(product.getProductId());
         
         return reviews.stream().map(this::mapReviewToResponse).toList();
     }
@@ -152,7 +152,7 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public List<ReviewResponse> searchReviews(Long productId, Long userId, Integer rating) {
         
-        List<Review> reviews = reviewRepo.findByProductIdAndUserIdAndRating(productId, userId, rating);
+        List<Review> reviews = reviewRepo.findByProductProductIdAndUserIdAndRating(productId, userId, rating);
         
         return reviews.stream().map(this::mapReviewToResponse).toList();
     }

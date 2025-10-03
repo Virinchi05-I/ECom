@@ -24,24 +24,23 @@ import com.ECom.ecommerce.services.user.UserService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/ECom")
+@RequestMapping("/user")
 @CrossOrigin
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/admin/user/create")
+
+    @PostMapping("/admin/create")
     public ResponseEntity<UserResponse> createUser(
         @RequestBody UserRequest userRequest,
         @RequestParam("role") String role
         ) {
         return ResponseEntity.ok(userService.createUser(userRequest, role));
     }
-    
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT', 'ROLE_VENDOR')")
-    @PatchMapping("/user/update")
+
+    @PatchMapping("/update")
     public ResponseEntity<UserResponse> update(
         @RequestBody UpdateUserRequest updateUserRequest,
         @RequestParam("userId") Long userId
@@ -49,30 +48,30 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUser(userId, updateUserRequest));
     }
 
-    @DeleteMapping("/user/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<Void> delete(@RequestParam("userId") Long userId) {
         userService.deleteUser(userId);
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/user/deactivate")
+    @PatchMapping("/deactivate")
     public ResponseEntity<Void> softDelete(@RequestParam Long userId){
         userService.setActiveStatus(userId, false);
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/user/activate")
+    @PatchMapping("/activate")
     public ResponseEntity<Void> restore(@RequestParam Long userId){
         userService.setActiveStatus(userId, true);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/user/filterById")
+    @GetMapping("/filterById")
     public ResponseEntity<UserResponse> getById(@RequestParam Long userId){
         return ResponseEntity.ok(userService.getUserById(userId));
     }
 
-    @GetMapping("/user/filterByUsername")
+    @GetMapping("/filterByUsername")
     public ResponseEntity<UserResponse> getByName(@RequestParam String username){
         
         Optional<UserResponse> response = userService.getUserByUsername(username);
@@ -82,7 +81,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/user/filterByEmail")
+    @GetMapping("/filterByEmail")
     public ResponseEntity<UserResponse> getByEmail(@RequestParam String email){
         
         Optional<UserResponse> response = userService.getUserByEmail(email);
@@ -91,7 +90,7 @@ public class UserController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/user/filterByPhoneNumber")
+    @GetMapping("/filterByPhoneNumber")
     public ResponseEntity<UserResponse> getByPhoneNumber(@RequestParam String phoneNumber){
         
         Optional<UserResponse> response = userService.getUserByPhoneNumber(phoneNumber);
@@ -100,20 +99,17 @@ public class UserController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PatchMapping("/admin/user/role")
+    @PatchMapping("/admin/role")
     public ResponseEntity<UserResponse> updateRole(@RequestParam Long userId, @RequestParam String role){
         return ResponseEntity.ok(userService.setUserRole(userId, role));
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/admin/user/all")
+    @GetMapping("/admin/all")
     public ResponseEntity<List<UserResponse>> getAll(){
         return ResponseEntity.ok(userService.findAll());
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/admin/user/filter")
+    @GetMapping("/admin/filter")
     public ResponseEntity<List<UserResponse>> filter(
         @RequestParam(required = false) String name,
         @RequestParam(required = false) String email,

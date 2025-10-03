@@ -24,7 +24,7 @@ import lombok.Setter;
 public class Order {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -43,8 +43,7 @@ public class Order {
     private BigDecimal totalAmount;
     
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private OrderStatus orderstatus;
+    private OrderStatus orderStatus;
     
     @CreationTimestamp
     private LocalDateTime orderDate;
@@ -62,7 +61,7 @@ public class Order {
     }
 
     public void setOrderStatus(OrderStatus status) {
-        this.orderstatus = status;
+        this.orderStatus = status;
     }
 
 

@@ -15,7 +15,7 @@ import java.util.*;
 public class Category {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoryId;
 
     @Column(length = 100, nullable = false)
@@ -23,5 +23,9 @@ public class Category {
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "item_type_id")  // foreign key column
+    private ItemType itemType;
 
 }

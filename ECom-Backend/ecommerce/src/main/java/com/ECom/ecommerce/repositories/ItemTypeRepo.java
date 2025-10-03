@@ -15,11 +15,11 @@ import com.ECom.ecommerce.entities.Product;
 @Repository
 public interface ItemTypeRepo extends JpaRepository<ItemType, Long> {
 
-    List<ItemType> findByName(String name);
+    List<ItemType> findByItemTypeName(String name);
 
-    Optional<ItemType> findByProduct(Product product);
+    Optional<ItemType> findByProducts(Product product);
 
-    List<ItemType> findByCategory(Category category);
+    List<ItemType> findByCategories(Category category);
     
-    List<ItemType> findByBrand(Brand brand);
+    List<ItemType> findByBrands(Brand brand);
 }

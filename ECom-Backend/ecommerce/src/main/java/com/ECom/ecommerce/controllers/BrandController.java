@@ -18,7 +18,7 @@ import com.ECom.ecommerce.services.brand.BrandService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/brands")
 @CrossOrigin
 @RequiredArgsConstructor
 public class BrandController {

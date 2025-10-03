@@ -33,17 +33,16 @@ public interface UserRepo extends JpaRepository<User, Long> {
     // -------- Admin utility methods --------- //
     List<User> findByRole(Role role);
 
-    @Query("SELECT u from User u WHERE u.name LIKE %?1% AND u.email LIKE %?2% AND u.phoneNumber LIKE %?3% AND u.role = ?4")
-    List<User> searchUsers(@Param("name") String name, @Param("email") String email, @Param("phoneNumber") String phoneNumber, @Param("role") Role role);
-    
+    @Query("SELECT u FROM User u WHERE u.name LIKE %:name% AND u.email LIKE %:email% AND u.phoneNumber LIKE %:phoneNumber% AND u.role = :role")
+    List<User> searchUsers(@Param("name") String name, @Param("email") String email,
+                       @Param("phoneNumber") String phoneNumber, @Param("role") Role role);
+
     List<User> findByActiveAndRole(boolean active, Role role);
 
     List<User> findByCreatedDate(LocalDateTime createdDate);
     
     List<User> findByCreatedDateBetween(LocalDateTime startDate, LocalDateTime endDate);
 
-    Role getRole();
     
-    void setRole(Role role);
 
 }

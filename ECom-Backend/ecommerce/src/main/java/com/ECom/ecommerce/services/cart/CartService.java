@@ -6,14 +6,14 @@ import com.ECom.ecommerce.dtos.cart.response.CartResponse;
 
 public interface CartService {
     
-    CartResponse getCartByUserId(String userId);
+    CartResponse getCartByUserId(Long userId);
     
-    CartResponse addCartItem(String userId, AddCartItemRequest addCartItemRequest);
+    CartResponse addCartItem(Long userId, AddCartItemRequest addCartItemRequest);
 
-    CartResponse updateCartItem(String userId, UpdateCartItemRequest updateCartItemRequest);
+    CartResponse updateCartItem(Long userId, UpdateCartItemRequest updateCartItemRequest);
     
-    CartResponse removeCartItem(String userId, String productId);
+    CartResponse removeCartItem(Long userId, Long productId);
 
-    CartResponse clearCart(String userId);
+    CartResponse clearCart(Long userId);
     
 }

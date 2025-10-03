@@ -15,7 +15,7 @@ import java.util.*;
 public class Brand {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long brandId;
 
     @Column(length = 100, nullable = false)
@@ -29,6 +29,10 @@ public class Brand {
 
     @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "item_type_id")  // foreign key column
+    private ItemType itemType;
 
     public String getLogoUrl() {
         return logoUrl;

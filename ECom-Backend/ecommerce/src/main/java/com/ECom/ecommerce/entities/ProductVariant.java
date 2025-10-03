@@ -22,7 +22,7 @@ import jakarta.persistence.Transient;
 
 public class ProductVariant {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long variantId;
 
     @ManyToOne
@@ -33,9 +33,6 @@ public class ProductVariant {
     private String size;
     private int stock;
 
-    @Transient
-    private boolean isInStock(){
-        return stock > 0;
-    }
+
 }
 
